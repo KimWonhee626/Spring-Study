@@ -11,12 +11,10 @@ import java.util.Optional;
 
 // 서비스 클래스는 비즈니스 처리와 관련된 메소드, 이름 사용해야함.
 
-@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Autowired
     // DI (Dependency Injection)
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
