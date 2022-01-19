@@ -1,24 +1,29 @@
 package hello.hellospring.service;
 
-import hello.hellospring.repository.JdbcMemberRepository;
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
-import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
+import hello.hellospring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 // 수동으로 SpringBean에 등록
 @Configuration
 public class SpringConfig {
 
-    private final DataSource dataSource;
+ /*   private final DataSource dataSource;
 
     @Autowired
     public SpringConfig(DataSource dataSource) {
         this.dataSource = dataSource;
+    }*/
+
+    private EntityManager em;
+
+    @Autowired
+    public SpringConfig(EntityManager em){
+        this.em = em;
     }
 
     @Bean
@@ -32,7 +37,7 @@ public class SpringConfig {
 
         // jdbc에서 데이터 받아옴
         // DI를 사용하여 코드를 수정하지 않고 설정만으로 구현 클래스 변경 가능
-       return new JdbcTemplateMemberRepository(dataSource);
+       return new JpaMemberRepository(em);
     }
 
     // 1. memberService, memberRepository 를 SpringBean에 등록함
